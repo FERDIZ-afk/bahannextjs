@@ -49,13 +49,24 @@ const NewSeriesPage = () => {
   return (
     <main className="min-h-screen bg-gray-900 text-white p-6">
       <div className="max-w-5xl mx-auto space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Create New Series</h1>
-          <div className="space-x-2">
-            <button type="button" className="px-4 py-2 border border-gray-500 text-gray-300 rounded-md hover:bg-gray-700">Discard</button>
-            <button onClick={handleSubmit} className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Save</button>
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center gap-4">
+          <div className="flex gap-2 sm:order-2">
+            <button
+              type="button"
+              className="w-full sm:w-auto px-4 py-2 border border-gray-500 text-gray-300 rounded-md hover:bg-gray-700"
+            >
+              Discard
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+            >
+              Save
+            </button>
           </div>
+          <h1 className="text-3xl font-bold sm:order-1">Create New Series</h1>
         </div>
+
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Series Info */}

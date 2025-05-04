@@ -1,13 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { PlusCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useGetSeries } from "@/services/series/queries";
+
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import SeriesTable from "@/components/admin/tables/SeriesTable";
+
 
 const AdminSeriesPage = () => {
   const searchParams = useSearchParams();

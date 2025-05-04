@@ -94,18 +94,21 @@ model VerificationToken {
 
 model Serie {
   id            Int        @id @default(autoincrement())
-  title         String
-  slug          String     @unique
-  description   String     @db.Text
+  tittle        String?
+  judul         String?
+  altJudul      String?
+  urlLinkSlug   String?
+
   status        Status
 //  type          Type
   postStatus    PostStatus
   image         String?
-  alternative   String?
-  author        String?
-  artist        String?
-  serialization String?
-  released      String?
+
+  duration           String?
+  musim              String?
+  
+  releaseDateOn      String?
+  updatedOn          String?
   rating        String?
   
 // ini buat nyambung k user kalau mau add creator

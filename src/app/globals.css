@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Untuk menghilangkan teks dan informasi inspeksi yang tidak diinginkan pada gambar */
+img.w-full.h-auto {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+}
+
+/* Add rounded corners to cards */
+.card,
+[class*="card-"],
+.manga-item,
+.manga-cover {
+  border-radius: 0.5rem !important; /* 8px rounded corners */
+  overflow: hidden;
+}
+
+/* If you have specific elements that need rounded corners */
+.manga-card img,
+.latest-updated img,
+.thumbnail img {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* For any container elements that might need rounded corners */
+.grid > div,
+.grid-cols-3 > div,
+.grid-cols-4 > div,
+.grid-cols-5 > div,
+.grid-cols-6 > div {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+/* Menghilangkan spacing pada elemen gambar */
+.flex-col.items-center {
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+}
+
+/* Menghilangkan jarak antar gambar */
+.flex-col.items-center > div {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+}
+
+/* Styling untuk card dan UI elements */
+.bg-gradient-to-br {
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Animasi untuk buttons */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Meningkatkan tampilan focus dan hover */
+button:focus,
+a:focus {
+  outline: 2px solid rgba(168, 85, 247, 0.5);
+  outline-offset: 2px;
+}
+
+/* Glass morphism effect */
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+}
+
+/* Improved shadows */
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2),
+    0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Membuat tampilan loading lebih halus */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(30, 30, 30, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #9333ea, #3b82f6);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #a855f7, #60a5fa);
+}
+
+/* Progress bar animation */
+@keyframes progressAnimation {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.h-full.bg-gradient-to-r {
+  animation: progressAnimation 0.3s ease-out;
+}

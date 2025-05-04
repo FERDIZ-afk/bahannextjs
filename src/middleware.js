@@ -115,6 +115,7 @@ export async function middleware(request) {
         referer.startsWith(origin)
       );
 
+     /*
       // Jika request berasal dari website kita sendiri, izinkan tanpa API key
       if (isFromOurWebsite) {
         // Lanjutkan request
@@ -139,6 +140,8 @@ export async function middleware(request) {
           }
         );
       }
+      */
+      
     }
   }
 

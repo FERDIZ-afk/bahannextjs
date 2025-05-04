@@ -49,24 +49,24 @@ const NewSeriesPage = () => {
   return (
     <main className="min-h-screen bg-gray-900 text-white p-6">
       <div className="max-w-5xl mx-auto space-y-6">
+        {/* Header & Tombol (Desktop) */}
         <div className="flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center gap-4">
-          <div className="flex gap-2 sm:order-2">
+          <div className="flex gap-2 sm:order-2 hidden sm:flex">
             <button
               type="button"
-              className="w-full sm:w-auto px-4 py-2 border border-gray-500 text-gray-300 rounded-md hover:bg-gray-700"
+              className="px-4 py-2 border border-gray-500 text-gray-300 rounded-md hover:bg-gray-700"
             >
               Discard
             </button>
             <button
               onClick={handleSubmit}
-              className="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
             >
               Save
             </button>
           </div>
           <h1 className="text-3xl font-bold sm:order-1">Create New Series</h1>
         </div>
-
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Series Info */}
@@ -75,11 +75,21 @@ const NewSeriesPage = () => {
             <div className="space-y-4">
               <div>
                 <label className="block mb-1 text-sm text-gray-300">Title</label>
-                <input name="title" value={formData.title} onChange={handleChange} className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <input
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
               </div>
               <div>
                 <label className="block mb-1 text-sm text-gray-300">Description</label>
-                <textarea name="description" value={formData.description} onChange={handleChange} className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
               </div>
             </div>
           </div>
@@ -141,6 +151,22 @@ const NewSeriesPage = () => {
               </select>
             </div>
           </div>
+
+          {/* Mobile Button (di bawah form, hanya saat sm:hidden) */}
+          <div className="flex sm:hidden justify-end gap-2 pt-4">
+            <button
+              type="button"
+              className="w-1/2 px-4 py-2 border border-gray-500 text-gray-300 rounded-md hover:bg-gray-700"
+            >
+              Discard
+            </button>
+            <button
+              type="submit"
+              className="w-1/2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+            >
+              Save
+            </button>
+          </div>
         </form>
       </div>
     </main>
@@ -148,6 +174,7 @@ const NewSeriesPage = () => {
 };
 
 export default NewSeriesPage;
+
 
 
 

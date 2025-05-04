@@ -47,44 +47,44 @@ const NewSeriesPage = () => {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#1e1b4b] to-[#312e81] text-white p-6">
+    <main className="min-h-screen bg-gray-900 text-white p-6">
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Create New Series</h1>
           <div className="space-x-2">
-            <button type="button" className="px-4 py-2 border border-indigo-400 text-indigo-300 rounded-md hover:bg-indigo-600">Discard</button>
+            <button type="button" className="px-4 py-2 border border-gray-500 text-gray-300 rounded-md hover:bg-gray-700">Discard</button>
             <button onClick={handleSubmit} className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Save</button>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Series Info */}
-          <div className="bg-[#1e1b4b] border border-indigo-700 rounded-xl p-6">
+          <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
             <h2 className="text-2xl font-semibold mb-4 text-indigo-300">Series Information</h2>
             <div className="space-y-4">
               <div>
-                <label className="block mb-1 text-sm text-indigo-200">Title</label>
-                <input name="title" value={formData.title} onChange={handleChange} className="w-full bg-[#312e81] text-white border border-indigo-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <label className="block mb-1 text-sm text-gray-300">Title</label>
+                <input name="title" value={formData.title} onChange={handleChange} className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
               <div>
-                <label className="block mb-1 text-sm text-indigo-200">Description</label>
-                <textarea name="description" value={formData.description} onChange={handleChange} className="w-full bg-[#312e81] text-white border border-indigo-600 rounded-md px-4 py-2 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <label className="block mb-1 text-sm text-gray-300">Description</label>
+                <textarea name="description" value={formData.description} onChange={handleChange} className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
             </div>
           </div>
 
           {/* Series Details */}
-          <div className="bg-[#1e1b4b] border border-indigo-700 rounded-xl p-6">
+          <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
             <h2 className="text-2xl font-semibold mb-4 text-indigo-300">Series Details</h2>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
               {['alternative', 'author', 'artist', 'serialization', 'released', 'rating'].map((field) => (
                 <div key={field}>
-                  <label className="block mb-1 text-sm text-indigo-200 capitalize">{field}</label>
+                  <label className="block mb-1 text-sm text-gray-300 capitalize">{field}</label>
                   <input
                     name={field}
                     value={formData[field]}
                     onChange={handleChange}
-                    className="w-full bg-[#312e81] text-white border border-indigo-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
               ))}
@@ -92,38 +92,38 @@ const NewSeriesPage = () => {
           </div>
 
           {/* Genres */}
-          <div className="bg-[#1e1b4b] border border-indigo-700 rounded-xl p-6">
+          <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
             <h2 className="text-2xl font-semibold mb-4 text-indigo-300">Genres</h2>
-            <label className="block mb-1 text-sm text-indigo-200">Genres (comma-separated)</label>
+            <label className="block mb-1 text-sm text-gray-300">Genres (comma-separated)</label>
             <textarea
               name="genres"
               value={formData.genres}
               onChange={handleChange}
-              className="w-full bg-[#312e81] text-white border border-indigo-600 rounded-md px-4 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           {/* Status & Publish */}
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="bg-[#1e1b4b] border border-indigo-700 rounded-xl p-6">
+            <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
               <h2 className="text-xl font-semibold mb-2 text-indigo-300">Publish State</h2>
               <select
                 name="publishState"
                 value={formData.publishState}
                 onChange={handleChange}
-                className="w-full bg-[#312e81] text-white border border-indigo-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="DRAFT">Draft</option>
                 <option value="PUBLISHED">Published</option>
               </select>
             </div>
-            <div className="bg-[#1e1b4b] border border-indigo-700 rounded-xl p-6">
+            <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
               <h2 className="text-xl font-semibold mb-2 text-indigo-300">Status</h2>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="w-full bg-[#312e81] text-white border border-indigo-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full bg-gray-700 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="ONGOING">Ongoing</option>
                 <option value="COMPLETED">Completed</option>
@@ -137,6 +137,7 @@ const NewSeriesPage = () => {
 };
 
 export default NewSeriesPage;
+
 
 
 

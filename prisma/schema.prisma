@@ -13,6 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+enum Status {
+  COMPLETED
+  ONGOING
+}
+
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -71,6 +87,52 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+
+
+
+model Serie {
+  id            Int        @id @default(autoincrement())
+  title         String
+  slug          String     @unique
+  description   String     @db.Text
+  status        Status
+//  type          Type
+  postStatus    PostStatus
+  image         String?
+  alternative   String?
+  author        String?
+  artist        String?
+  serialization String?
+  released      String?
+  rating        String?
+  
+// ini buat nyambung k user kalau mau add creator
+//  userId   String
+//  user     User      @relation(fields: [userId], references: [id])
+  
+//  genres   Genre[]         @relation(references: [id], onDelete: Cascade)
+//  chapters Chapter[]       @relation(references: [id], onDelete: Cascade)
+//  bookmarks Bookmark[]     @relation(references: [id], onDelete: Cascade)
+
+  genres   Genre[]
+//  chapters Chapter[]
+//  bookmarks Bookmark[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Genre {
+  id   Int    @id @default(autoincrement())
+  name String
+  slug String @unique
+
+  series Serie[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Bookmark {

@@ -76,6 +76,7 @@ export async function middleware(request) {
     // If it's a browser request or specifically requesting HTML content
     if (isRequestFromBrowser) {
       // Check if API key is provided and valid
+      /*
       if (!apiKey || apiKey !== validApiKey) {
         return new NextResponse(
           JSON.stringify({
@@ -91,6 +92,7 @@ export async function middleware(request) {
           }
         );
       }
+      */
     }
 
     // For programmatic requests, require API key for sensitive endpoints

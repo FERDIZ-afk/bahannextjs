@@ -23,8 +23,8 @@ export async function middleware(request) {
     "https://www.mangaverse.my.id", // Include www subdomain if needed
     "https://mangaverse-gamma.vercel.app",
     "https://www.mangaverse-gamma.vercel.app",
-    "https://bahananimeweb.vercel.app",
-    "https://www.bahananimeweb.vercel.app",
+    "https://bahannextjs.vercel.app",
+    "https://www.bahannextjs.vercel.app.vercel.app",
   ];
 
   // Then ensure the auth callback route is excluded from origin checking or properly handled

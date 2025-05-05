@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
+import slugify from 'slugify';
 
 
 
@@ -31,69 +32,67 @@ export async function GET(request) {
   }
 }
 
-export async function POST(req) {
-  try {
-    const session = await getServerSession(authOptions);
 
-    // Cek apakah pengguna login
-    if (!session || !session.user) {
-      return NextResponse.json(
-        { error: "Anda harus login untuk menambahkan komentar" },
-        { status: 401 }
-      );
-    }
+export async function POST(req: NextRequest) {
+  try {
     const body = await req.json();
 
     const {
-      tittle,
-      judul,
-      altJudul,
-      urlLinkSlug,
-      status,
-      postStatus,
-      image,
-      duration,
-      musim,
-      releaseDateOn,
-      updatedOn,
+      title,
+      description,
+      alternative,
+      author,
+      artist,
+      serialization,
+      released,
       rating,
-      genreIds, // array of genre IDs (string[])
+      genres,
+      status,
+      publishState,
     } = body;
-    
-    const newAnime = await prisma.anime.create({
+
+    if (!title) {
+      return NextResponse.json({ message: 'Title is required.' }, { status: 400 });
+    }
+
+    const slug = slugify(title, { lower: true, strict: true });
+
+    // Cek duplikasi
+    const exists = await prisma.anime.findUnique({ where: { urlLinkSlug: slug } });
+    if (exists) {
+      return NextResponse.json({ message: 'Series with this title already exists.' }, { status: 400 });
+    }
+
+    const anime = await prisma.anime.create({
       data: {
-        tittle,
-        judul,
-        altJudul,
-        urlLinkSlug,
+        tittle: title,
+        judul: description,
+        altJudul: alternative,
+        urlLinkSlug: slug,
         status,
-        postStatus,
-        image,
-        duration,
-        musim,
-        releaseDateOn,
-        updatedOn,
+        postStatus: publishState,
+        musim: serialization,
+        releaseDateOn: released,
         rating,
         genres: {
-          connect: genreIds?.map(id => ({ id })),
+          connectOrCreate: genres
+            .split(',')
+            .map((g: string) => g.trim())
+            .filter(Boolean)
+            .map((name: string) => ({
+              where: { slug: slugify(name, { lower: true }) },
+              create: { name, slug: slugify(name, { lower: true }) },
+            })),
         },
       },
       include: {
         genres: true,
       },
     });
-    
-    
-    return NextResponse.json(JSON.stringify(newAnime), {
-      status: 201,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  
+
+    return NextResponse.json({ ...anime, slug }, { status: 201 });
   } catch (error) {
-    console.error("Error creating comment:", error);
-    return NextResponse.json(
-      { error: "Terjadi kesalahan saat menambahkan komentar" },
-      { status: 500 }
-    );
+    console.error(error);
+    return NextResponse.json({ message: 'Server error.' }, { status: 500 });
   }
 }

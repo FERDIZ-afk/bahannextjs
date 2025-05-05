@@ -77,9 +77,9 @@ export async function POST(req) {
         genres: {
           connectOrCreate: genres
             .split(',')
-            .map((g: string) => g.trim())
+            .map(g => g.trim())
             .filter(Boolean)
-            .map((name: string) => ({
+            .map(name => ({
               where: { slug: slugify(name, { lower: true }) },
               create: { name, slug: slugify(name, { lower: true }) },
             })),

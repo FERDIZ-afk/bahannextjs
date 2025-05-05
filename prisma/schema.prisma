@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -39,7 +33,6 @@ model User {
   created_at    DateTime  @default(now()) @db.Timestamp(6)
   updated_at    DateTime  @updatedAt @db.Timestamp(6)
 
-  // Relations
   accounts       Account[]
   sessions       Session[]
   bookmarks      Bookmark[]
@@ -74,9 +67,9 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime @db.Timestamp(6)
-  
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@map("sessions")
 }
 
@@ -89,123 +82,96 @@ model VerificationToken {
   @@map("verification_tokens")
 }
 
-
-
-
 model Anime {
-  id             String        @id @default(autoincrement())
+  id             String        @id @default(cuid())
   tittle         String?
   judul          String?
   altJudul       String?
   urlLinkSlug    String?
-
   status         Status
-//  type          Type
   postStatus     PostStatus
   image          String?
-
   duration       String?
   musim          String?
-  
   releaseDateOn  String?
   updatedOn      String?
   rating         String?
-  
-// ini buat nyambung k user kalau mau add creator
-//  userId   String
-//  user     User      @relation(fields: [userId], references: [id])
-  
-//  genres   Genre[]         @relation(references: [id], onDelete: Cascade)
-//  chapters Chapter[]       @relation(references: [id], onDelete: Cascade)
-//  bookmarks Bookmark[]     @relation(references: [id], onDelete: Cascade)
 
-  genres    Genre[]
-  eplister  Episode[]
-//  chapters Chapter[]
-//  bookmarks Bookmark[]
+  genres         Genre[]
+  eplister       Episode[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Genre {
-  id   Int    @id @default(autoincrement())
-  name String
-  slug String @unique
-
-  animes Anime[]
-
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  animes    Anime[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Episode {
-  id                 Int       @id @default(autoincrement())
-  linkSlug           String?
-  title              String?
-  epnum              String?
-  views              Int       @default(0)
-  date               String?
-  nontonDetails      NontonDetails?
-
-  animeId            String
-  anime              Anime     @relation(fields: [animeId], references: [id])
+  id           String    @id @default(cuid())
+  linkSlug     String?
+  title        String?
+  epnum        String?
+  views        Int       @default(0)
+  date         String?
+  animeId      String
+  anime        Anime     @relation(fields: [animeId], references: [id])
+  nontonDetails NontonDetails?
 }
 
 model NontonDetails {
-  id                 Int       @id @default(autoincrement())
+  id                 String              @id @default(cuid())
   judul              String?
   altJudul           String?
   gambar             String?
   episodeNumber      String?
   updateDate         String?
   vidutama           String?
+  episodeId          String              @unique
+  episode            Episode             @relation(fields: [episodeId], references: [id])
   videomirroriframe  VideoMirrorIframe[]
   servervideodl      ServerVideoDL[]
-
-  episodeId          Int       @unique
-  episode            Episode   @relation(fields: [episodeId], references: [id])
 }
 
 model VideoMirrorIframe {
-  id                 Int       @id @default(autoincrement())
-  server             String?
-  src                String?
-
-  nontonDetailsId    Int
-  nontonDetails      NontonDetails @relation(fields: [nontonDetailsId], references: [id])
+  id              String         @id @default(cuid())
+  server          String?
+  src             String?
+  nontonDetailsId String
+  nontonDetails   NontonDetails @relation(fields: [nontonDetailsId], references: [id])
 }
 
 model ServerVideoDL {
-  id                 Int       @id @default(autoincrement())
-  server             String?
-  links              ServerLink[]
-
-  nontonDetailsId    Int
-  nontonDetails      NontonDetails @relation(fields: [nontonDetailsId], references: [id])
+  id              String         @id @default(cuid())
+  server          String?
+  links           ServerLink[]
+  nontonDetailsId String
+  nontonDetails   NontonDetails @relation(fields: [nontonDetailsId], references: [id])
 }
 
 model ServerLink {
-  id                 Int       @id @default(autoincrement())
-  url                String?
-  text               String?
-
-  serverVideoDLId    Int
-  serverVideoDL      ServerVideoDL @relation(fields: [serverVideoDLId], references: [id])
+  id              String         @id @default(cuid())
+  url             String?
+  text            String?
+  serverVideoDLId String
+  serverVideoDL   ServerVideoDL @relation(fields: [serverVideoDLId], references: [id])
 }
 
-//
-
 model Bookmark {
-  id          String    @id @default(cuid())
-  userId      String
-  mangaSlug   String
-  mangaTitle  String
-  createdAt   DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime  @updatedAt @db.Timestamp(6)
+  id         String    @id @default(cuid())
+  userId     String
+  mangaSlug  String
+  mangaTitle String
+  createdAt  DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt  DateTime  @updatedAt @db.Timestamp(6)
 
-  // Relations
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([mangaSlug])
@@ -221,7 +187,6 @@ model ReadingHistory {
   chapterTitle String
   readAt       DateTime  @default(now()) @db.Timestamp(6)
 
-  // Relations
   user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -239,7 +204,6 @@ model Comment {
   createdAt  DateTime @default(now()) @db.Timestamp(6)
   updatedAt  DateTime @updatedAt @db.Timestamp(6)
 
-  // Relations
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])

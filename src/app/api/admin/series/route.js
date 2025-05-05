@@ -31,7 +31,7 @@ export async function GET(request) {
   }
 }
 
-export async function POST(request) {
+export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -42,10 +42,53 @@ export async function POST(request) {
         { status: 401 }
       );
     }
+    const body = await req.json();
 
+    const {
+      tittle,
+      judul,
+      altJudul,
+      urlLinkSlug,
+      status,
+      postStatus,
+      image,
+      duration,
+      musim,
+      releaseDateOn,
+      updatedOn,
+      rating,
+      genreIds, // array of genre IDs (string[])
+    } = body;
+    
+    const newAnime = await prisma.anime.create({
+      data: {
+        tittle,
+        judul,
+        altJudul,
+        urlLinkSlug,
+        status,
+        postStatus,
+        image,
+        duration,
+        musim,
+        releaseDateOn,
+        updatedOn,
+        rating,
+        genres: {
+          connect: genreIds?.map(id => ({ id })),
+        },
+      },
+      include: {
+        genres: true,
+      },
+    });
+    
+    
+    return NextResponse.json(JSON.stringify(newAnime), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' },
+    });
   
-
-    return NextResponse.json(session);
   } catch (error) {
     console.error("Error creating comment:", error);
     return NextResponse.json(

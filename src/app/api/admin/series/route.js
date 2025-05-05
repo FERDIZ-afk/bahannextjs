@@ -17,10 +17,11 @@ export async function GET(request) {
         { status: 401 }
       );
     }
-
+    
+    const allAnime = await prisma.anime.findMany();
   
 
-    return NextResponse.json(session);
+    return NextResponse.json({"listanim":allAnime});
   } catch (error) {
     console.error("Error creating comment:", error);
     return NextResponse.json(

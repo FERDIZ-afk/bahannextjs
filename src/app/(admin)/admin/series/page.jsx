@@ -23,7 +23,7 @@ const AdminSeriesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const res = await fetch(`/api/anime?status=${status}&page=${page}`);
+      const res = await fetch(`/api/admin/series?status=${status}&page=${page}`);
       const json = await res.json();
       setAnimeList(json.data || []);
       setTotalPages(json.totalPages || 1);

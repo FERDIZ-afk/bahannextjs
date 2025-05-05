@@ -87,7 +87,7 @@ model Anime {
   tittle         String?
   judul          String?
   altJudul       String?
-  urlLinkSlug    String?
+  urlLinkSlug    String? @unique
   status         Status
   postStatus     PostStatus
   image          String?

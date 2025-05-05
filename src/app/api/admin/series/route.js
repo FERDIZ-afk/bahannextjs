@@ -33,7 +33,7 @@ export async function GET(request) {
 }
 
 
-export async function POST(req: NextRequest) {
+export async function POST(req) {
   try {
     const body = await req.json();
 

@@ -4,8 +4,8 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
   provider = "prisma-client-js"
+generator client {
 }
 
 datasource db {
@@ -93,7 +93,7 @@ model VerificationToken {
 
 
 model Anime {
-  id             Int        @id @default(autoincrement())
+  id             string      @id @default(autoincrement())
   tittle         String?
   judul          String?
   altJudul       String?

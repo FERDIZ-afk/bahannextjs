@@ -29,7 +29,7 @@ const NewSeriesPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/series', {
+      const res = await fetch('/api/admin/series', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

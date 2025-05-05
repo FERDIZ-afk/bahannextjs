@@ -6,16 +6,25 @@ import slugify from 'slugify';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
+  
   const status = searchParams.get("status");
-  const page = parseInt(searchParams.get("page") || "1", 10);
+  const search = searchParams.get("search")?.toLowerCase() || ""; // Ambil query search
+  const page = parseInt(searchParams.get("page") || "1", 10); // Halaman
   const limit = 10;
   const offset = (page - 1) * limit;
 
-  const where = {};
-  if (status && status !== "all") {
-    where.status = status;
-  }
+  // Membuat query filter
+  const where = {
+    ...(status && status !== "all" && { status }), // Filter berdasarkan status
+    ...(search && { // Filter berdasarkan search judul
+      judul: {
+        contains: search,
+        mode: "insensitive", // Pencarian tanpa memperhatikan kapitalisasi
+      },
+    }),
+  };
 
+  // Ambil data dan total count
   const [data, total] = await Promise.all([
     prisma.anime.findMany({
       where,
@@ -23,14 +32,15 @@ export async function GET(request) {
       take: limit,
       orderBy: { createdAt: "desc" },
     }),
-    prisma.anime.count({ where }),
+    prisma.anime.count({ where }), // Hitung total hasil filter
   ]);
 
+  // Kembalikan hasil dalam bentuk JSON
   return NextResponse.json({
     data,
     total,
     page,
-    totalPages: Math.ceil(total / limit),
+    totalPages: Math.ceil(total / limit), // Total halaman berdasarkan total data
   });
 }
 

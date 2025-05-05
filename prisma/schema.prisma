@@ -92,24 +92,24 @@ model VerificationToken {
 
 
 
-model Serie {
-  id            Int        @id @default(autoincrement())
-  tittle        String?
-  judul         String?
-  altJudul      String?
-  urlLinkSlug   String?
+model Anime {
+  id             Int        @id @default(autoincrement())
+  tittle         String?
+  judul          String?
+  altJudul       String?
+  urlLinkSlug    String?
 
-  status        Status
+  status         Status
 //  type          Type
-  postStatus    PostStatus
-  image         String?
+  postStatus     PostStatus
+  image          String?
 
-  duration           String?
-  musim              String?
+  duration       String?
+  musim          String?
   
-  releaseDateOn      String?
-  updatedOn          String?
-  rating        String?
+  releaseDateOn  String?
+  updatedOn      String?
+  rating         String?
   
 // ini buat nyambung k user kalau mau add creator
 //  userId   String
@@ -119,7 +119,8 @@ model Serie {
 //  chapters Chapter[]       @relation(references: [id], onDelete: Cascade)
 //  bookmarks Bookmark[]     @relation(references: [id], onDelete: Cascade)
 
-  genres   Genre[]
+  genres    Genre[]
+  eplister  Episode[]
 //  chapters Chapter[]
 //  bookmarks Bookmark[]
 
@@ -132,11 +133,68 @@ model Genre {
   name String
   slug String @unique
 
-  series Serie[]
+  animes Anime[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Episode {
+  id                 Int       @id @default(autoincrement())
+  linkSlug           String?
+  title              String?
+  epnum              String?
+  views              Int       @default(0)
+  date               String?
+  nontonDetails      NontonDetails?
+
+  animeId            String
+  anime              Anime     @relation(fields: [animeId], references: [id])
+}
+
+model NontonDetails {
+  id                 Int       @id @default(autoincrement())
+  judul              String?
+  altJudul           String?
+  gambar             String?
+  episodeNumber      String?
+  updateDate         String?
+  vidutama           String?
+  videomirroriframe  VideoMirrorIframe[]
+  servervideodl      ServerVideoDL[]
+
+  episodeId          Int       @unique
+  episode            Episode   @relation(fields: [episodeId], references: [id])
+}
+
+model VideoMirrorIframe {
+  id                 Int       @id @default(autoincrement())
+  server             String?
+  src                String?
+
+  nontonDetailsId    Int
+  nontonDetails      NontonDetails @relation(fields: [nontonDetailsId], references: [id])
+}
+
+model ServerVideoDL {
+  id                 Int       @id @default(autoincrement())
+  server             String?
+  links              ServerLink[]
+
+  nontonDetailsId    Int
+  nontonDetails      NontonDetails @relation(fields: [nontonDetailsId], references: [id])
+}
+
+model ServerLink {
+  id                 Int       @id @default(autoincrement())
+  url                String?
+  text               String?
+
+  serverVideoDLId    Int
+  serverVideoDL      ServerVideoDL @relation(fields: [serverVideoDLId], references: [id])
+}
+
+//
 
 model Bookmark {
   id          String    @id @default(cuid())

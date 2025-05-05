@@ -29,3 +29,27 @@ export async function GET(request) {
     );
   }
 }
+
+export async function POST(request) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    // Cek apakah pengguna login
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { error: "Anda harus login untuk menambahkan komentar" },
+        { status: 401 }
+      );
+    }
+
+  
+
+    return NextResponse.json(session);
+  } catch (error) {
+    console.error("Error creating comment:", error);
+    return NextResponse.json(
+      { error: "Terjadi kesalahan saat menambahkan komentar" },
+      { status: 500 }
+    );
+  }
+}

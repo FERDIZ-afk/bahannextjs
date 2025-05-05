@@ -6,7 +6,6 @@ import slugify from 'slugify';
 
 
 
-
 export async function GET(request) {
   try {
     const session = await getServerSession(authOptions);

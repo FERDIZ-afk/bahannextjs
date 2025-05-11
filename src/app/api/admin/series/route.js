@@ -23,6 +23,8 @@ export async function GET(request) {
       },
     }),
   };
+  
+  console.log(where)
 
   // Ambil data dan total count
   const [data, total] = await Promise.all([

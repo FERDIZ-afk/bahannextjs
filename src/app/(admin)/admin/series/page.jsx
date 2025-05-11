@@ -42,7 +42,7 @@ const AdminSeriesPage = () => {
     e.preventDefault();
     const form = e.target;
     const input = form.search.value.trim();
-    router.push(`/api/admin/series?status=${status}&search=${input}&page=1`);
+    router.push(`/admin/series?status=${status}&search=${input}&page=1`);
   };
 
   return (
